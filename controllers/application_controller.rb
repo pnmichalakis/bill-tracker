@@ -7,13 +7,14 @@ class ApplicationController < Sinatra::Base
 	set :views, File.expand_path('../../views',__FILE__)
 	set :public_folder, File.expand_path('../../public',__FILE__)
 
-	# enable :logging, :dump_errors, :raise_errors, :show_exceptions
 	enable :method_override
 	use Rack::Session::Pool
 
 	after { ActiveRecord::Base.connection.close }
 
 	get '/' do
+		@bills = HTTParty.get('https://www.govtrack.us/api/v2/bill?congress=113')
+		@bill_link = @bills["objects"].first["link"]
 		erb :index
 	end
 

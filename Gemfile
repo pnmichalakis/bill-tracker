@@ -1,6 +1,5 @@
 source 'http://rubygems.org'
-
-gem 'sinatra'
+gem 'sinatra', git: 'git@github.com:sinatra/sinatra.git'
 gem 'pg'
 gem 'sinatra-activerecord'
 gem 'sinatra-reloader'
