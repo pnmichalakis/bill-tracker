@@ -13,8 +13,12 @@ class ApplicationController < Sinatra::Base
 	after { ActiveRecord::Base.connection.close }
 
 	get '/' do
-		@bills = HTTParty.get('https://www.govtrack.us/api/v2/bill?congress=113')
+		@bills = HTTParty.get('https://www.govtrack.us/api/v2/bill?congress=114')
 		@bill_link = @bills["objects"].first["link"]
+		@congress = HTTParty.get('https://www.govtrack.us/api/v2/person')
+		@congress_names = @congress.map do |person|
+												person["sortname"]
+											end
 		erb :index
 	end
 
